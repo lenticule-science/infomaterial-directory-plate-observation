@@ -1,0 +1,8 @@
+#lang rmn/v2
+(map
+  ("type" "InfomaterialDirectoryPlateObservationLaw")
+  ("version" 1)
+  ("precondition" "The customer grants bounded read-only access to one exact local directory plate and a direct-mount ceiling.")
+  ("operation" "Snapshot the directory inode; enumerate the complete NFC-normalized direct name set; lstat each direct mount for kind and metadata stability; reread the plate; read no child interior.")
+  ("postcondition" "Return one canonical RMN receipt with a placement-neutral plate identity, directory mode, exact ordered direct mounts, vector-time observation event, completeness, and childInteriorsRead=false.")
+  ("refusal" "Refuse a non-directory root, relative path, unsupported mount kind, NFC collision, direct-mount ceiling breach, concurrent plate or mount metadata mutation, child-interior authority, customer mutation, or any request to infer a circuit or enterprise."))

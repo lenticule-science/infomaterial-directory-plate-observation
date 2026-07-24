@@ -1,0 +1,54 @@
+{
+  "name": "@emsenn/infomaterial-directory-plate-observation",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Complete shallow observation of one directory plate without reading child interiors.",
+  "exports": {
+    ".": "./src/directory-plate.mjs",
+    "./client": "./src/client.mjs"
+  },
+  "bin": {
+    "serve-directory-plate-a2a": "./bin/server.mjs"
+  },
+  "scripts": {
+    "check": "node --check src/directory-plate.mjs && node --check src/client.mjs && node --check src/law.mjs && node --check bin/execute-a2a-task.mjs && node --check bin/server.mjs",
+    "test": "node --test test/*.test.mjs",
+    "verify": "npm run check && npm test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@a2a-js/sdk": "1.0.0-beta.0",
+    "@emsenn/a2a-contracted-agent-service": "file:../../../../../red-cup-engineering/services/web-services-section/services/a2a-services-section/services/a2a-contracted-agent-service",
+    "@emsenn/a2a-rmn-part-service": "file:../../../../../red-cup-engineering/services/web-services-section/services/a2a-services-section/services/a2a-rmn-part-service",
+    "@emsenn/a2a-rmn-task-client-service": "file:../../../../../red-cup-engineering/services/web-services-section/services/a2a-services-section/services/a2a-rmn-task-client-service",
+    "@emsenn/rmn-semantic-conformance": "file:../rmn-semantic-conformance",
+    "@emsenn/rwil-rdf-services": "file:../rwil-rdf-services"
+  },
+  "x-agentic-metro-enterprise": {
+    "node-id": "infomaterial-directory-plate-observation",
+    "actor": "urn:ame:infomaterial-directory-plate-observation",
+    "organizational-kind": "micro-enterprise",
+    "owners": [
+      "obsmetrological-services-section"
+    ],
+    "membrane": {
+      "law": "lib/",
+      "lasting-instances": "content/",
+      "append-only-instances": "data/"
+    },
+    "admission": "bounded read-only access to one exact local directory plate",
+    "refusal": "child-interior access, recursion, plate drift, unsupported material, inferred circuit boundaries, or customer mutation",
+    "operation-catalog": {
+      "observe-directory-plate": {
+        "contract": "ni:///sha-256;MJGFSENW1zj6EwE9_O8_ye4tYsynDuAJ9btgqxlwRR4",
+        "protocol": "A2A 1.0 via official JavaScript SDK 1.0.0-beta.0 development profile",
+        "accepts": "application/rmn+cbor territory-relative directory plate task",
+        "returns": "application/rmn+cbor canonical directory-plate receipt",
+        "legacyCompatibility": false
+      }
+    }
+  }
+}
