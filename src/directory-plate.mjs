@@ -20,16 +20,14 @@ function kindOf(stat) {
   throw new Error("directory plate contains unsupported filesystem material");
 }
 
-export async function observeDirectoryPlate(location, { maximumMounts = 100_000, observedAt = new Date().toISOString() } = {}) {
+export async function observeDirectoryPlate(location, { observedAt = new Date().toISOString() } = {}) {
   if (!isAbsolute(location ?? "")) throw new Error("directory plate location must be absolute");
-  if (!Number.isSafeInteger(maximumMounts) || maximumMounts < 0) throw new Error("maximumMounts must be a nonnegative safe integer");
   if (!Number.isFinite(Date.parse(observedAt))) throw new Error("observedAt must be an ISO timestamp");
   location = resolve(location);
   const beforeStat = await lstat(location, { bigint: true });
   if (!beforeStat.isDirectory()) throw new Error("directory plate root must be a directory");
   const before = snapshot(beforeStat), mounts = [];
   for await (const entry of await opendir(location)) {
-    if (mounts.length >= maximumMounts) throw new Error("direct-mount ceiling exceeded");
     mounts.push({ raw: entry.name, name: entry.name.normalize("NFC") });
   }
   mounts.sort((left, right) => byteOrder(left.name, right.name));

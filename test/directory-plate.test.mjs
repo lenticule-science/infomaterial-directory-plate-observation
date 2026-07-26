@@ -26,7 +26,10 @@ test("plate identity is placement-neutral while the observation event is not", a
   assert.notEqual(a.semanticId, b.semanticId);
 });
 
-test("the shallow die enforces its direct-mount bound", async () => {
-  const root = await mkdtemp(join(tmpdir(), "directory-plate-bound-")); await writeFile(join(root, "a"), "a");
-  await assert.rejects(observeDirectoryPlate(root, { maximumMounts: 0 }), /ceiling exceeded/u);
+test("the shallow die observes the finite plate without a caller count ceiling", async () => {
+  const root = await mkdtemp(join(tmpdir(), "directory-plate-complete-"));
+  await writeFile(join(root, "a"), "a"); await writeFile(join(root, "b"), "b");
+  const result = await observeDirectoryPlate(root);
+  assert.deepEqual(result.observation.mounts.map(({ name }) => name), ["a", "b"]);
+  assert.equal(result.observation.complete, true);
 });
