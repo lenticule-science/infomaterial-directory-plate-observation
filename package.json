@@ -24,49 +24,7 @@
     "@red-cup-engineering/a2a-contracted-agent-service": "2.0.4",
     "@red-cup-engineering/a2a-rmn-part-service": "1.0.0",
     "@red-cup-engineering/a2a-rmn-task-client-service": "1.1.0",
-    "@red-cup-engineering/rmn-semantic-conformance": "6.0.0",
+    "@red-cup-engineering/rmn-semantic-conformance": "6.0.1",
     "@lenticule-science/rwil-rdf-projection-service": "1.0.2"
-  },
-  "x-agentic-metro-enterprise": {
-    "node-id": "infomaterial-directory-plate-observation",
-    "actor": "urn:ame:infomaterial-directory-plate-observation",
-    "organizational-kind": "micro-enterprise",
-    "owners": [
-      "obsmetrological-services-section"
-    ],
-    "membrane": {
-      "law": "lib/",
-      "lasting-instances": "content/",
-      "append-only-instances": "data/"
-    },
-    "admission": "bounded read-only access to one exact local directory plate",
-    "refusal": "child-interior access, recursion, plate drift, unsupported material, inferred circuit boundaries, or customer mutation",
-    "operation-catalog": {
-      "observe-directory-plate": {
-        "contract": "ni:///sha-256;MJGFSENW1zj6EwE9_O8_ye4tYsynDuAJ9btgqxlwRR4",
-        "protocol": "A2A 1.0 via official JavaScript SDK 1.0.0-beta.0 development profile",
-        "accepts": "application/rmn+cbor territory-relative directory plate task",
-        "returns": "application/rmn+cbor canonical directory-plate receipt",
-        "legacyCompatibility": false
-      }
-    }
-  },
-  "x-semiotic-voxel": {
-    "profile": "org.harmonious-union.semiotic-voxel.v1",
-    "owner": "lenticule-science",
-    "kind": "actor",
-    "actor": "urn:ame:infomaterial-directory-plate-observation",
-    "operations": [
-      "observe-directory-plate"
-    ],
-    "capabilities": [
-      {
-        "capability": "infomaterial-directory-plate-observation",
-        "faces": [
-          "observe-directory-plate"
-        ]
-      }
-    ],
-    "package": "@lenticule-science/infomaterial-directory-plate-observation"
   }
 }
