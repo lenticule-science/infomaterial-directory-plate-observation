@@ -12,7 +12,7 @@
     "serve-directory-plate-a2a": "./scripts/server.mjs"
   },
   "scripts": {
-    "check": "node --check src/directory-plate.mjs && node --check src/client.mjs && node --check src/law.mjs && node --check scripts/execute-a2a-task.mjs && node --check scripts/server.mjs",
+    "check": "node --check src/directory-plate.mjs && node --check src/client.mjs && node --check scripts/execute-a2a-task.mjs && node --check scripts/server.mjs",
     "test": "node --test test/*.test.mjs",
     "verify": "npm run check && npm test"
   },

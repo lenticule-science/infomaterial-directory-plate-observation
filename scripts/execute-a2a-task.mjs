@@ -8,7 +8,6 @@ import { extractRmnPart, rmnPart } from "@red-cup-engineering/a2a-rmn-part-servi
 import { createSettlementStore } from "@lenticule-science/witness-journal-rdf-projection-service/client";
 import { decodeDirectoryPlateTaskRequest } from "../src/client.mjs";
 import { observeDirectoryPlate } from "../src/directory-plate.mjs";
-import { DIRECTORY_PLATE_OBSERVATION_LAW } from "../src/law.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 function boundedLocation(territoryRoot, relativePath) {
@@ -25,5 +24,5 @@ const request = decodeDirectoryPlateTaskRequest(extractRmnPart(message.parts).by
 const territoryRoot = resolve(process.env.INFOMATERIAL_TERRITORY_ROOT);
 const store = createSettlementStore({ settlementRoot: ROOT, agentUrl: process.env.WITNESS_JOURNAL_RDF_AGENT });
 const result = await observeDirectoryPlate(boundedLocation(territoryRoot, request.relativePath));
-await store.record({ category: "infomaterial-directory-plate-observation.receipt", recordedAt: result.observation.observedAt, record: { ...result.observation, semanticId: result.semanticId, law: DIRECTORY_PLATE_OBSERVATION_LAW.id } });
+await store.record({ category: "infomaterial-directory-plate-observation.receipt", recordedAt: result.observation.observedAt, record: { ...result.observation, semanticId: result.semanticId } });
 process.stdout.write(`${JSON.stringify(Message.toJSON({ messageId: randomUUID(), contextId: message.contextId, taskId: message.taskId, role: Role.ROLE_AGENT, parts: [rmnPart(result.canonicalBytes, "directory-plate-receipt.rmn.cbor")], metadata: { disposition: "conformant", receiptNi: result.semanticId, plateRootNi: result.observation.plateRoot }, extensions: [], referenceTaskIds: [] }))}\n`);
