@@ -20,10 +20,10 @@ function boundedLocation(territoryRoot, relativePath) {
 const message = Message.fromJSON(JSON.parse(readFileSync(0, "utf8")));
 if (message.role !== Role.ROLE_USER) throw new Error("directory plate observation requires an A2A ROLE_USER message");
 if (!process.env.INFOMATERIAL_TERRITORY_ROOT) throw new Error("INFOMATERIAL_TERRITORY_ROOT is required");
-if (!process.env.RWIL_RDF_AGENT) throw new Error("RWIL_RDF_AGENT is required");
+if (!process.env.WITNESS_JOURNAL_RDF_AGENT) throw new Error("WITNESS_JOURNAL_RDF_AGENT is required");
 const request = decodeDirectoryPlateTaskRequest(extractRmnPart(message.parts).bytes);
 const territoryRoot = resolve(process.env.INFOMATERIAL_TERRITORY_ROOT);
-const store = createSettlementStore({ settlementRoot: ROOT, agentUrl: process.env.RWIL_RDF_AGENT });
+const store = createSettlementStore({ settlementRoot: ROOT, agentUrl: process.env.WITNESS_JOURNAL_RDF_AGENT });
 const result = await observeDirectoryPlate(boundedLocation(territoryRoot, request.relativePath));
 await store.record({ category: "infomaterial-directory-plate-observation.receipt", recordedAt: result.observation.observedAt, record: { ...result.observation, semanticId: result.semanticId, law: DIRECTORY_PLATE_OBSERVATION_LAW.id } });
 process.stdout.write(`${JSON.stringify(Message.toJSON({ messageId: randomUUID(), contextId: message.contextId, taskId: message.taskId, role: Role.ROLE_AGENT, parts: [rmnPart(result.canonicalBytes, "directory-plate-receipt.rmn.cbor")], metadata: { disposition: "conformant", receiptNi: result.semanticId, plateRootNi: result.observation.plateRoot }, extensions: [], referenceTaskIds: [] }))}\n`);
