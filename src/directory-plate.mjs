@@ -1,7 +1,7 @@
 import { lstat, opendir } from "node:fs/promises";
 import { isAbsolute, resolve } from "node:path";
-import { checkTerm, decodeSemantic, semanticBytes, semanticId } from "@red-cup-engineering/rmn-semantic-conformance";
-import { decodeRelationalValue, encodeRelationalValue } from "@red-cup-engineering/rmn-semantic-conformance/relational-value";
+import { checkTerm, decodeSemantic, semanticBytes, semanticId } from "@red-cup-engineering/relation-model-notation-runtime";
+import { decodeRelationalValue, encodeRelationalValue } from "@red-cup-engineering/relation-model-notation-runtime/relational-value";
 
 export const DIRECTORY_PLATE_PROFILE = "org.emsenn.infomaterial.directory-plate.v1";
 const NI = /^ni:\/\/\/sha-256;[A-Za-z0-9_-]{43}$/u;

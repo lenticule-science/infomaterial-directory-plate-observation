@@ -5,7 +5,7 @@ import { dirname, isAbsolute, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Message, Role } from "@a2a-js/sdk";
 import { extractRmnPart, rmnPart } from "@red-cup-engineering/a2a-rmn-part-service";
-import { createSettlementStore } from "@lenticule-science/witness-journal-rdf-projection-service/client";
+import { createSettlementStore } from "@red-cup-engineering/witness-journal-rdf-projection-service/client";
 import { decodeDirectoryPlateTaskRequest } from "../src/client.mjs";
 import { observeDirectoryPlate } from "../src/directory-plate.mjs";
 
