@@ -1,20 +1,19 @@
 {
   "name": "@lenticule-science/infomaterial-directory-plate-observation",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "private": true,
   "type": "module",
   "description": "Complete shallow observation of one directory plate without reading child interiors.",
+  "files": [
+    "src"
+  ],
   "exports": {
     ".": "./src/directory-plate.mjs",
     "./directory-plate": "./src/directory-plate.mjs",
-    "./client": "./src/client.mjs",
     "./package.json": "./package.json"
   },
-  "bin": {
-    "serve-directory-plate-a2a": "./scripts/server.mjs"
-  },
   "scripts": {
-    "check": "node --check src/directory-plate.mjs && node --check src/client.mjs && node --check scripts/execute-a2a-task.mjs && node --check scripts/server.mjs",
+    "check": "node --check src/directory-plate.mjs",
     "test": "node --test test/*.test.mjs",
     "verify": "npm run check && npm test"
   },
@@ -22,11 +21,6 @@
     "node": ">=22"
   },
   "dependencies": {
-    "@a2a-js/sdk": "1.0.0-beta.0",
-    "@red-cup-engineering/a2a-contracted-agent-service": "2.0.5",
-    "@red-cup-engineering/a2a-rmn-part-service": "1.0.1",
-    "@red-cup-engineering/a2a-rmn-task-client-service": "1.1.1",
-    "@red-cup-engineering/relation-model-notation-runtime": "7.0.0",
-    "@red-cup-engineering/witness-journal-rdf-projection-service": "1.1.0"
+    "@red-cup-engineering/semantic-content-identify-service": "0.2.2"
   }
 }

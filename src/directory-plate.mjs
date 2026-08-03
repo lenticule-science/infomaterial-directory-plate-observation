@@ -1,15 +1,13 @@
 import { lstat, opendir } from "node:fs/promises";
 import { isAbsolute, resolve } from "node:path";
-import { checkTerm, decodeSemantic, semanticBytes, semanticId } from "@red-cup-engineering/relation-model-notation-runtime";
-import { decodeRelationalValue, encodeRelationalValue } from "@red-cup-engineering/relation-model-notation-runtime/relational-value";
+import { admitJsonSemanticContent, EMPTY_WITNESS_ROOT, identifyJsonSemanticContent } from "@red-cup-engineering/semantic-content-identify-service";
 
 export const DIRECTORY_PLATE_PROFILE = "org.emsenn.infomaterial.directory-plate.v1";
 const NI = /^ni:\/\/\/sha-256;[A-Za-z0-9_-]{43}$/u;
 const byteOrder = (left, right) => Buffer.compare(Buffer.from(left, "utf8"), Buffer.from(right, "utf8"));
 
 function typed(value) {
-  const encoded = encodeRelationalValue(value), term = ["ascribe", encoded.type, encoded.term];
-  return { id: semanticId(term), bytes: semanticBytes(term) };
+  return identifyJsonSemanticContent({ objectKind: "infomaterial.directory-plate", value, witnessRoot: EMPTY_WITNESS_ROOT });
 }
 function snapshot(stat) { return { dev: stat.dev, ino: stat.ino, mode: stat.mode, size: stat.size, mtimeNs: stat.mtimeNs, ctimeNs: stat.ctimeNs }; }
 function sameSnapshot(left, right) { return ["dev", "ino", "mode", "size", "mtimeNs", "ctimeNs"].every((key) => left[key] === right[key]); }
@@ -52,11 +50,8 @@ export function validateDirectoryPlateReceipt(carrier) {
   if (carrier?.type !== "InfomaterialDirectoryPlateObservation" || carrier.profile !== DIRECTORY_PLATE_PROFILE || !NI.test(carrier.semanticId ?? "") || typeof carrier.canonicalBytesBase64 !== "string") throw new Error("canonical directory plate observation required");
   const bytes = Buffer.from(carrier.canonicalBytesBase64, "base64");
   if (bytes.toString("base64") !== carrier.canonicalBytesBase64) throw new Error("directory plate bytes are not canonical base64");
-  const term = decodeSemantic(bytes);
-  if (term?.[0] !== "ascribe" || term.length !== 3) throw new Error("directory plate is not an RMN ascription");
-  checkTerm(term[2], term[1]);
-  if (semanticId(term) !== carrier.semanticId) throw new Error("directory plate identity differs from its canonical bytes");
-  const value = decodeRelationalValue(term[1], term[2]);
+  const value = admitJsonSemanticContent({ bytes, objectKind: "infomaterial.directory-plate" }).value;
+  if (typed(value).id !== carrier.semanticId) throw new Error("directory plate identity differs from its canonical bytes");
   if (value.type !== "InfomaterialDirectoryPlateObservation" || value.profile !== DIRECTORY_PLATE_PROFILE || value.complete !== true || value.vectorTimed !== true || value.globalInstantClaimed !== false || value.childInteriorsRead !== false || !NI.test(value.plateRoot ?? "") || !Array.isArray(value.mounts)) throw new Error("directory plate does not prove one complete shallow observation");
   const names = new Set();
   for (const mount of value.mounts) {
