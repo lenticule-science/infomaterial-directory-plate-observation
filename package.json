@@ -22,5 +22,9 @@
   },
   "dependencies": {
     "@red-cup-engineering/semantic-content-identify-service": "0.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lenticule-science/infomaterial-directory-plate-observation.git"
   }
 }
