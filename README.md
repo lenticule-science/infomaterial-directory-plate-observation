@@ -8,3 +8,10 @@
 <!-- 561-group-standards:badges:end -->
 
 Complete shallow observation of one directory plate without reading child interiors.
+
+## Code
+
+This repository holds section data only. The executable code that used to live here moved to
+[`red-cup-engineering/infomaterial-directory-plate-observation`](https://github.com/red-cup-engineering/infomaterial-directory-plate-observation) (received 2026-10-24 from
+`lenticule-science/infomaterial-directory-plate-observation@6622b111e140`). That engine reads this data from `SECTION_ROOT` (default: its current working directory),
+so point `SECTION_ROOT` at a checkout of this repository.
